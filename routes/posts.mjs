@@ -37,6 +37,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Get post by ID
+router.get("/:id/comments", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await db.findPostComments(id);
+
+    if (!post)
+      return res
+        .status(404)
+        .json({ message: "The post with the specified ID does not exist." });
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.log("The comments information could not be retrieved.", error);
+    res
+      .status(500)
+      .json({ error: "The comments information could not be retrieved." });
+  }
+});
+
 // Create new post
 router.post("/", async (req, res) => {
   const { title, contents } = req.body;
