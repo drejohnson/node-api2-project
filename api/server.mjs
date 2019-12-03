@@ -1,9 +1,11 @@
 import express from "express";
+import cors from "cors";
 import postsRoute from "../routes/posts.mjs";
 
 const server = express();
 
 server.use(express.json());
+server.use(cors());
 
 server.use("/api/posts", postsRoute);
 
