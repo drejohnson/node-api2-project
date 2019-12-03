@@ -74,4 +74,28 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Update posts
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (!req.body)
+      return res.status(500).json({ error: "The posts could not be removed" });
+
+    const updatedPost = await db.update(id, req.body);
+
+    if (!updatedPost)
+      return res
+        .status(404)
+        .json({ message: "The post with the specified ID does not exist." });
+
+    const post = await db.findById(id);
+    res.status(200).json(post);
+  } catch (error) {
+    console.log("The post information could not be modified.", error);
+    res
+      .status(500)
+      .json({ error: "The post information could not be modified." });
+  }
+});
+
 export default router;
