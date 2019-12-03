@@ -1,12 +1,11 @@
 import express from "express";
-
-// const hubsRoute = require("../routes/hubs");
+import postsRoute from "../routes/posts.mjs";
 
 const server = express();
 
 server.use(express.json());
 
-// server.use("/api/hubs", hubsRoute);
+server.use("/api/posts", postsRoute);
 
 server.use("/", (req, res) =>
   res.send(`
