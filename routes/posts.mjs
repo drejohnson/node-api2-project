@@ -77,6 +77,56 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Create new comment
+router.post("/:id/comments", async (req, res) => {
+  const { id } = req.params;
+  const { text, post_id } = req.body;
+
+  try {
+    const post = await db.findById(id);
+
+    if (!post)
+      return res
+        .status(404)
+        .json({ message: "The post with the specified ID does not exist." });
+
+    if (!text)
+      return res.status(400).json({
+        errorMessage: "Please provide text for the comment."
+      });
+
+    const newComment = await db.insertComment({ text, post_id });
+
+    return res.status(201).json(newComment);
+  } catch (error) {
+    console.log(
+      "There was an error while saving the comment to the database",
+      error
+    );
+    res
+      .status(500)
+      .json({
+        error: "There was an error while saving the comment to the database"
+      });
+  }
+  // const { text, post_id } = req.body;
+  // if (!title || !contents)
+  //   return res.status(400).json({
+  //     errorMessage: "Please provide title and contents for the post."
+  //   });
+
+  // try {
+  //   const post = await db.findById(id);
+  //   const newPost = await db.insert({ title, contents });
+  //   res.status(201).json(newPost);
+  // } catch (error) {
+  //   console.log("The post information could not be retrieved.", error);
+  //   res
+  //     .status(500)
+  //     .json({ error: "The post information could not be retrieved." });
+  // }
+});
+
 // Delete post
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
