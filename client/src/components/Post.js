@@ -19,10 +19,12 @@ const Post = ({ post }) => {
       <Text as="p" mb={4}>
         {post.contents}
       </Text>
-      <Button variant="outline" mr={3}>
+      <Button sx={{ borderRadius: 0 }} variant="outline" mr={3}>
         Edit
       </Button>
-      <Button variant="outline">Delete</Button>
+      <Button sx={{ borderRadius: 0 }} variant="outline" color="red">
+        Delete
+      </Button>
     </Box>
   );
 };
