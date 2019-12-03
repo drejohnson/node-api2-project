@@ -37,4 +37,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Create new post
+router.post("/", async (req, res) => {
+  const { title, contents } = req.body;
+  if (!title || !contents)
+    return res.status(400).json({
+      errorMessage: "Please provide title and contents for the post."
+    });
+
+  try {
+    const newPost = await db.insert({ title, contents });
+    res.status(201).json(newPost);
+  } catch (error) {
+    console.log("The post information could not be retrieved.", error);
+    res
+      .status(500)
+      .json({ error: "The post information could not be retrieved." });
+  }
+});
+
 export default router;
