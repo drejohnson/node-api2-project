@@ -13,7 +13,7 @@ GET http://localhost:4000/api/posts/2
 ###
 
 # Get comments by post ID
-GET http://localhost:4000/api/posts/3/comments
+GET http://localhost:4000/api/posts/2/comments
 
 ###
 

@@ -50,13 +50,13 @@ router.get("/:id/comments", async (req, res) => {
         .status(404)
         .json({ message: "The post with the specified ID does not exist." });
 
-    if (!comments.length) throw error;
+    if (!comments.length)
+      throw new Error("The comments information could not be retrieved.");
 
     return res.status(200).json(comments);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "The comments information could not be retrieved." });
+    console.log({ error: error.message });
+    return res.status(500).json({ error: error.message }); // The comments information could not be retrieved.
   }
 });
 
