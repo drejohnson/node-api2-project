@@ -37,22 +37,24 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Get post by ID
+// Get comment by post by ID
 router.get("/:id/comments", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const post = await db.findPostComments(id);
+    const post = await db.findById(id);
+    const comments = await db.findPostComments(id);
 
-    if (!post)
+    if (!post.length)
       return res
         .status(404)
         .json({ message: "The post with the specified ID does not exist." });
 
-    res.status(200).json(post);
+    if (!comments.length) throw error;
+
+    return res.status(200).json(comments);
   } catch (error) {
-    console.log("The comments information could not be retrieved.", error);
-    res
+    return res
       .status(500)
       .json({ error: "The comments information could not be retrieved." });
   }
@@ -99,15 +101,9 @@ router.post("/:id/comments", async (req, res) => {
 
     return res.status(201).json(newComment);
   } catch (error) {
-    console.log(
-      "There was an error while saving the comment to the database",
-      error
-    );
-    res
-      .status(500)
-      .json({
-        error: "There was an error while saving the comment to the database"
-      });
+    res.status(500).json({
+      error: "There was an error while saving the comment to the database"
+    });
   }
   // const { text, post_id } = req.body;
   // if (!title || !contents)
