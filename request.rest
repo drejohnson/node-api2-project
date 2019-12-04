@@ -1,0 +1,52 @@
+GET http://localhost:4000
+
+###
+
+# Get All posts
+GET http://localhost:4000/api/posts
+
+###
+
+# Get post by ID
+GET http://localhost:4000/api/posts/2
+
+###
+
+# Get comments by post ID
+GET http://localhost:4000/api/posts/2/comments
+
+###
+
+# Add post
+POST http://localhost:4000/api/posts
+Content-Type: application/json
+
+{
+  "title": "Do not scorn pity, that is the gift of a gentle heart.",
+  "contents": "Someone once said"
+}
+
+###
+
+# Add comment
+POST http://localhost:4000/api/posts/1/comments
+Content-Type: application/json
+
+{
+  "text": "You know nothing John Snow",
+  "post_id": 1
+}
+
+###
+
+# Delete post
+DELETE http://localhost:4000/api/posts/10
+
+###
+
+PUT http://localhost:4000/api/posts/1
+Content-Type: application/json
+
+{
+  "contents": "Frodo"
+}
